@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Games Arcade · Claude Opus 5.5 Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: radial-gradient(circle at top, #16192b 0%, #0a0b10 100%);
+      color: #f1f5f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px 80px;
+      overflow-x: hidden;
+    }
+    .header {
+      text-align: center;
+      max-width: 860px;
+      margin-bottom: 52px;
+      animation: fadeIn 0.8s ease-out;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #c084fc;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #a855f7;
+      box-shadow: 0 0 8px #a855f7;
+      animation: pulse 2s infinite;
+    }
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 1.12rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      width: 100%;
+      max-width: 1240px;
+      margin-bottom: 60px;
+    }
+    .card {
+      background: rgba(18, 22, 34, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent-gradient);
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px -15px var(--accent-shadow);
+    }
+    .card-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .card-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+    .card-desc {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.55;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      background: var(--accent-gradient);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 14px var(--accent-shadow);
+      transition: all 0.25s ease;
+    }
+    .btn:hover {
+      filter: brightness(1.15);
+      transform: scale(1.02);
+    }
+    .footer {
+      color: #64748b;
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .footer a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer a:hover {
+      color: #f1f5f9;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      CLAUDE OPUS 5.5 · ONE-SHOT VIBE CODING
+    </div>
+    <h1>Vibe Games Arcade</h1>
+    <p class="subtitle">本合集所有游戏均为使用 Claude Opus 5.5 单次一句话 Prompt 直接生成的前端完整独立作品。零后端依赖，即开即玩。</p>
+  </header>
+
+  <main class="grid">
+    <!-- Game 1: League of Legends -->
+    <div class="card" style="--accent-gradient: linear-gradient(135deg, #0ea5e9, #3b82f6); --accent-shadow: rgba(14, 165, 233, 0.35);">
+      <div class="card-icon">⚔️</div>
+      <h2 class="card-title">英雄联盟峡谷仿真</h2>
+      <p class="card-desc">召唤师峡谷 2D 拟真对战，配备精准防御塔仇恨、三路兵线推进、小兵与英雄 AI、A* 网格寻路以及完整技能冷却系统。</p>
+      <div class="tags">
+        <span class="tag">React 19</span>
+        <span class="tag">Canvas</span>
+        <span class="tag">A* Pathfinding</span>
+        <span class="tag">Champion AI</span>
+      </div>
+      <a class="btn" href="./lol/" target="_self">进入峡谷对战 →</a>
+    </div>
+
+    <!-- Game 2: Minecraft -->
+    <div class="card" style="--accent-gradient: linear-gradient(135deg, #10b981, #059669); --accent-shadow: rgba(16, 185, 129, 0.35);">
+      <div class="card-icon">⛏️</div>
+      <h2 class="card-title">我的世界 3D 沙盒</h2>
+      <p class="card-desc">纯客户端 3D 体素沙盒重现，包含程序化柏林噪声无限地形、光照遮挡、第一人称视角漫游、方块放置与破坏物理系统。</p>
+      <div class="tags">
+        <span class="tag">Three.js</span>
+        <span class="tag">Voxel Mesher</span>
+        <span class="tag">Perlin Noise</span>
+        <span class="tag">Physics</span>
+      </div>
+      <a class="btn" href="./minecraft/" target="_self">探索体素世界 →</a>
+    </div>
+
+    <!-- Game 3: Plants vs Zombies -->
+    <div class="card" style="--accent-gradient: linear-gradient(135deg, #84cc16, #eab308); --accent-shadow: rgba(132, 204, 22, 0.35);">
+      <div class="card-icon">🌻</div>
+      <h2 class="card-title">植物大战僵尸</h2>
+      <p class="card-desc">经典塔防完整复刻，包含植物图鉴（Almanac）、阳光掉落与经济网格、多种植物攻击弹道判定与波次僵尸推进攻防。</p>
+      <div class="tags">
+        <span class="tag">HTML5 Canvas</span>
+        <span class="tag">Game Engine</span>
+        <span class="tag">Almanac</span>
+        <span class="tag">Wave System</span>
+      </div>
+      <a class="btn" href="./pvz/" target="_self">保卫庭院草坪 →</a>
+    </div>
+
+    <!-- Game 4: Slay the Spire -->
+    <div class="card" style="--accent-gradient: linear-gradient(135deg, #ef4444, #8b5cf6); --accent-shadow: rgba(239, 68, 68, 0.35);">
+      <div class="card-icon">🃏</div>
+      <h2 class="card-title">杀戮尖塔肉鸽卡牌</h2>
+      <p class="card-desc">卡牌构筑 Roguelike 重现，完整实现 Act 地图节点路线、手牌抽牌弃牌堆循环、遗物状态被动以及怪物意图预警系统。</p>
+      <div class="tags">
+        <span class="tag">Deckbuilding</span>
+        <span class="tag">Roguelike</span>
+        <span class="tag">Relic System</span>
+        <span class="tag">Intent Engine</span>
+      </div>
+      <a class="btn" href="./sts/" target="_self">开始攀爬尖塔 →</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Powered by <strong>Claude Opus 5.5</strong> · One-Shot Vibe Coding</p>
+    <p>Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+  </footer>
+</body>
+</html>

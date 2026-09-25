@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'MC';
+  src: url('https://fonts.cdnfonts.com/s/25041/1_MinecraftRegular1.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MCFallback';
+  src: url('https://fonts.cdnfonts.com/s/31977/Minecraftia.woff') format('woff');
+  font-display: swap;
+}
+
+html, body, #root { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+body {
+  font-family: 'MC', 'MCFallback', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans SC', 'WenQuanYi Micro Hei', sans-serif;
+  color: #fff;
+  -webkit-font-smoothing: none;
+  user-select: none;
+}
+canvas { image-rendering: pixelated; }
+img.pixel { image-rendering: pixelated; }
+
+.mc-text { text-shadow: 2px 2px 0 #3f3f3f; }
+.mc-text-dark { text-shadow: 2px 2px 0 #222; }
+
+.mc-btn {
+  position: relative;
+  height: 40px;
+  font-family: inherit;
+  font-size: 17px;
+  color: #e0e0e0;
+  text-shadow: 2px 2px 0 #383838;
+  background:
+    linear-gradient(rgba(255,255,255,0.0), rgba(0,0,0,0.0)),
+    repeating-linear-gradient(45deg, #717171 0 3px, #6b6b6b 3px 6px, #747474 6px 8px);
+  border: 2px solid #000;
+  box-shadow: inset 2px 2px 0 #a9a9a9, inset -2px -3px 0 #4a4a4a;
+  cursor: pointer;
+  outline: none;
+  image-rendering: pixelated;
+}
+.mc-btn:hover:not(:disabled) {
+  border-color: #fff;
+  color: #ffffa0;
+  background: repeating-linear-gradient(45deg, #7b85b8 0 3px, #7580b3 3px 6px, #7f89bc 6px 8px);
+  box-shadow: inset 2px 2px 0 #b8c0ea, inset -2px -3px 0 #4d5583;
+}
+.mc-btn:disabled {
+  color: #a0a0a0;
+  text-shadow: none;
+  background: #2c2c2c;
+  box-shadow: none;
+  cursor: default;
+}
+
+.mc-input {
+  height: 40px;
+  background: #000;
+  border: 2px solid #a0a0a0;
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 17px;
+  padding: 0 8px;
+  outline: none;
+}
+.mc-input:focus { border-color: #fff; }
+
+.mc-slider { position: relative; height: 40px; background: #000; border: 2px solid #000; box-shadow: inset 0 0 0 2px #555; cursor: pointer; }
+.mc-slider .knob {
+  position: absolute; top: 0; width: 16px; height: 100%;
+  background: #6f6f6f; border: 2px solid #000;
+  box-shadow: inset 2px 2px 0 #a9a9a9, inset -2px -2px 0 #4a4a4a;
+}
+.mc-slider:hover .knob { border-color: #fff; }
+
+.mc-panel {
+  background: #c6c6c6;
+  border: 2px solid #000;
+  box-shadow: inset 4px 4px 0 #fff, inset -4px -4px 0 #555;
+  border-radius: 6px;
+  color: #404040;
+}
+.mc-slot {
+  width: 40px; height: 40px;
+  background: #8b8b8b;
+  box-shadow: inset 2px 2px 0 #373737, inset -2px -2px 0 #fff;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.mc-slot:hover::after { content: ''; position: absolute; inset: 2px; background: rgba(255,255,255,0.45); pointer-events: none; }
+
+.mc-tooltip {
+  background: rgba(16, 0, 16, 0.94);
+  border: 2px solid #25015b;
+  outline: 2px solid rgba(16, 0, 16, 0.94);
+  padding: 3px 7px;
+  color: #fff;
+  font-size: 16px;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  white-space: nowrap;
+}
+
+.dirt-bg { background-size: 64px 64px; image-rendering: pixelated; }
+
+@keyframes splash { 0%,100% { transform: rotate(-20deg) scale(1); } 50% { transform: rotate(-20deg) scale(1.08); } }
+.splash { animation: splash 0.5s ease-in-out infinite; transform-origin: center; }
+
+.scroll-mc::-webkit-scrollbar { width: 12px; }
+.scroll-mc::-webkit-scrollbar-track { background: #000; }
+.scroll-mc::-webkit-scrollbar-thumb { background: #808080; border: 2px solid #000; box-shadow: inset -2px -2px 0 #555, inset 2px 2px 0 #c0c0c0; }

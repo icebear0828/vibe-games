@@ -1,0 +1,72 @@
+name: Deploy Vibe Games to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build League of Legends Simulation
+        run: |
+          cd realistic-league-of-legends-simulation
+          npm install
+          npm run build
+
+      - name: Build Minecraft Recreation Project
+        run: |
+          cd realistic-minecraft-recreation-project
+          npm install
+          npm run build
+
+      - name: Build Plants vs Zombies
+        run: |
+          cd recreate-plants-vs-zombies
+          npm install
+          npm run build
+
+      - name: Build Slay the Spire Clone
+        run: |
+          cd slay-the-spire-clone
+          npm install
+          npm run build
+
+      - name: Assemble Public Site
+        run: |
+          mkdir -p public-site/lol public-site/minecraft public-site/pvz public-site/sts
+          cp portal/index.html public-site/index.html
+          cp -r realistic-league-of-legends-simulation/dist/* public-site/lol/
+          cp -r realistic-minecraft-recreation-project/dist/* public-site/minecraft/
+          cp -r recreate-plants-vs-zombies/dist/* public-site/pvz/
+          cp -r slay-the-spire-clone/dist/* public-site/sts/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
